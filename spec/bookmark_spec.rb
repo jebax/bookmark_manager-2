@@ -1,9 +1,20 @@
 require 'Bookmark'
-describe '.all' do
-  it 'return all bookmarks' do
-    bookmarks = Bookmark.all
-    expect(bookmarks).to include("http://www.makersacademy.com")
-    expect(bookmarks).to include("http://askjeeves.com")
-    expect(bookmarks).to include("http://twitter.com")
+
+describe Bookmark do
+  describe '.all' do
+    it 'return all bookmarks' do
+
+      conn = PG.connect(dbname: 'bookmark_manager_test')
+
+      conn.exec("INSERT INTO bookmarks (url) VALUES ('http://www.makersacademy.com');")
+      conn.exec("INSERT INTO bookmarks (url) VALUES ('http://askjeeves.com');")
+      conn.exec("INSERT INTO bookmarks (url) VALUES ('http://twitter.com');")
+
+
+      bookmarks = Bookmark.all
+      expect(bookmarks).to include("http://www.makersacademy.com")
+      expect(bookmarks).to include("http://askjeeves.com")
+      expect(bookmarks).to include("http://twitter.com")
+    end
   end
 end
