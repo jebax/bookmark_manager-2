@@ -6,6 +6,6 @@ feature 'bookmarks page' do
 
   scenario 'show all bookmarks' do
     visit '/bookmarks'
-    expect(page).to have_content "http://www.bookmarks, http://www.google.com, http://www.yahoo.com"
+    expect(page).to have_content "http://www.makersacademy.com, http://askjeeves.com, http://twitter.com, http://www.google.com"
   end
 end
