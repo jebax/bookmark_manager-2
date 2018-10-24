@@ -23,6 +23,11 @@ class Bookmark
     @conn.exec("DELETE FROM bookmarks WHERE id='#{id}';")
   end
 
+  def self.update(id, title, url)
+    choose_database
+    @conn.exec("UPDATE bookmarks SET title = '#{title}', url = '#{url}' WHERE id = '#{id}'")
+  end
+
   def initialize(title, url, id)
     @title = title
     @url = url

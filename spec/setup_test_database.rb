@@ -7,6 +7,7 @@ def setup_test
 end
 
 def add_data_to_test_db
+  setup_test
   conn = PG.connect(dbname: 'bookmark_manager_test')
   Bookmark.create('Makers', 'http://www.makersacademy.com')
   Bookmark.create('Ask Jeeves', 'http://askjeeves.com')

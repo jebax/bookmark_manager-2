@@ -6,7 +6,7 @@ feature 'deleting a bookmark' do
 
   scenario 'removes deleted bookmark from the list' do
     expect(page).to have_content 'Makers'
-    click_button '1'
+    first('.bookmark').click_button 'Delete'
     expect(page).not_to have_content 'Makers'
   end
 end

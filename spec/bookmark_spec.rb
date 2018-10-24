@@ -33,4 +33,19 @@ describe Bookmark do
       expect(Bookmark.all.first.title).not_to be 'Makers'
     end
   end
+
+  describe '::update' do
+
+    before do
+      add_data_to_test_db
+    end
+
+    it 'updates a bookmarks title and url' do
+      title = "Makers Academy"
+      url = "http://makers.tech"
+      Bookmark.update('1', title, url)
+      expect(Bookmark.all.last.title).to eq title
+      expect(Bookmark.all.last.url).to eq url
+    end
+  end
 end
