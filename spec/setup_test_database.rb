@@ -9,7 +9,7 @@ end
 
 def add_data_to_test_db
   conn = PG.connect(dbname: 'bookmark_manager_test')
-  conn.exec("INSERT INTO bookmarks (title,url) VALUES ('Makers','http://www.makersacademy.com');")
-  conn.exec("INSERT INTO bookmarks (title,url) VALUES ('Ask Jeeves','http://askjeeves.com');")
-  conn.exec("INSERT INTO bookmarks (title,url) VALUES ('Twitter','http://twitter.com');")
+  Bookmark.create('Makers','http://www.makersacademy.com')
+  Bookmark.create('Ask Jeeves','http://askjeeves.com')
+  Bookmark.create('Twitter','http://twitter.com')
 end
