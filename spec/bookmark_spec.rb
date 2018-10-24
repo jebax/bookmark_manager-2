@@ -1,7 +1,13 @@
 require 'Bookmark'
+require_relative './setup_test_database'
 
 describe Bookmark do
   describe '.all' do
+
+    before(:each) do
+      setup_test
+    end
+    
     it 'return all bookmarks' do
 
       conn = PG.connect(dbname: 'bookmark_manager_test')
