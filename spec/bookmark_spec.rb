@@ -25,4 +25,12 @@ describe Bookmark do
       expect(bookmarks.first.url).to eq 'http://www.makersacademy.com'
     end
   end
+
+  describe '::delete' do
+    it 'removes a bookmark from the list' do
+      add_data_to_test_db
+      Bookmark.delete('1')
+      expect(Bookmark.all.first.title).not_to be 'Makers'
+    end
+  end
 end

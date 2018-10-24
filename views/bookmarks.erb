@@ -1,4 +1,9 @@
 <h1>Bookmarks</h1>
-<% @bookmarks.each do |bookmarks| %>
-<a href='<%= bookmarks.url %>'><li><%= bookmarks.title %></li></a>
+<% @bookmarks.each do |bookmark| %>
+<li><a href='<%= bookmark.url %>'><%= bookmark.title %></a>
+  <form action="/bookmarks/<%= bookmark.id %>" method="post">
+    <input name='_method' type='hidden' value='DELETE'>
+    <input id='<%= bookmark.id %>' type='submit' value='Delete'>
+  </form>
+</li>
 <% end %>

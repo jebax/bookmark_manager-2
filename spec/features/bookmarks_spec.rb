@@ -11,7 +11,7 @@ feature 'bookmarks page' do
   scenario 'show all bookmarks' do
     add_data_to_test_db
     visit '/bookmarks'
-    expect(page).to have_content 'Makers Ask Jeeves Twitter'
+    expect(page).to have_content "Makers\nAsk Jeeves\nTwitter"
   end
 
   scenario 'clicking a title redirects the user to the page' do

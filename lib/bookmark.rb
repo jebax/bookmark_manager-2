@@ -18,6 +18,11 @@ class Bookmark
       "VALUES ('#{title}','#{url}') RETURNING id, title, url;")
   end
 
+  def self.delete(id)
+    choose_database
+    @conn.exec("DELETE FROM bookmarks WHERE id='#{id}';")
+  end
+
   def initialize(title, url, id)
     @title = title
     @url = url
