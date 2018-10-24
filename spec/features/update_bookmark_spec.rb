@@ -19,4 +19,11 @@ feature 'updating a bookmark' do
     click_button "Update"
     expect(page).to have_current_path '/bookmarks'
   end
+
+  scenario 'bookmark is updated successfully' do
+    fill_in "title", with: "Makers Academy"
+    fill_in "url", with: "http://makers.tech"
+    click_button "Update"
+    expect(page).to have_link("Makers Academy", href: "http://makers.tech" )
+  end
 end
