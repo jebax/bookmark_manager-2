@@ -1,31 +1,26 @@
-require 'pg'
+require 'database_connection'
 
 class Bookmark
-  @conn = nil
 
   attr_reader :title, :url, :id
 
   def self.all
-    choose_database
     select_all.map do |bookmark|
       Bookmark.new(bookmark['title'], bookmark['url'], bookmark['id'])
     end
   end
 
   def self.create(title, url)
-    choose_database
-    @conn.exec("INSERT INTO bookmarks(title,url)" \
+    DatabaseConnection.query("INSERT INTO bookmarks(title,url)" \
       "VALUES ('#{title}','#{url}') RETURNING id, title, url;")
   end
 
   def self.delete(id)
-    choose_database
-    @conn.exec("DELETE FROM bookmarks WHERE id='#{id}';")
+    DatabaseConnection.query("DELETE FROM bookmarks WHERE id='#{id}';")
   end
 
   def self.update(id, title, url)
-    choose_database
-    @conn.exec("UPDATE bookmarks SET title = '#{title}', url = '#{url}' WHERE id = '#{id}'")
+    DatabaseConnection.query("UPDATE bookmarks SET title = '#{title}', url = '#{url}' WHERE id = '#{id}'")
   end
 
   def initialize(title, url, id)
@@ -36,15 +31,7 @@ class Bookmark
 
   private
 
-  def self.choose_database
-    @conn = if ENV['RACK_ENV'] == 'test'
-              PG.connect(dbname: 'bookmark_manager_test')
-            else
-              PG.connect(dbname: 'bookmark_manager')
-            end
-  end
-
   def self.select_all
-    @conn.exec('SELECT * FROM bookmarks')
+    DatabaseConnection.query('SELECT * FROM bookmarks')
   end
 end
