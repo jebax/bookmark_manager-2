@@ -41,7 +41,6 @@ describe Bookmark do
   end
 
   describe '::update' do
-
     before do
       add_data_to_test_db
     end
@@ -52,6 +51,22 @@ describe Bookmark do
       Bookmark.update('1', title, url)
       expect(Bookmark.all.last.title).to eq title
       expect(Bookmark.all.last.url).to eq url
+    end
+  end
+
+  describe '::comments' do
+    before do
+      add_data_to_test_db
+      add_data_to_comment_db
+    end
+
+    it 'returns a list of comments' do
+      bookmark = Bookmark.all.first
+      comment = bookmark.comments.first
+      expect(comment).to be_a Comment
+      expect(comment.id).to eq '1'
+      expect(comment.text).to eq 'First comment'
+      expect(comment.bookmark_id).to eq bookmark.id
     end
   end
 end

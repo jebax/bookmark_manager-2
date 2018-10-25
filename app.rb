@@ -2,6 +2,7 @@ require 'sinatra/base'
 require './lib/bookmark'
 require './database_connection_setup'
 require 'sinatra/flash'
+require './lib/comment'
 
 class BookmarkManager < Sinatra::Base
   enable :sessions, :method_override
@@ -30,6 +31,11 @@ class BookmarkManager < Sinatra::Base
   get '/bookmarks/:id/edit' do
     @bookmark = Bookmark.all.select{ |bookmark| bookmark.id == params[:id] }.first
     erb :edit
+  end
+
+  post "/bookmarks/:id/edit" do
+    Comment.create(params[:comment], params[:id])
+    redirect "/bookmarks/#{params[:id]}/edit"
   end
 
   patch '/bookmarks/:id/edit' do

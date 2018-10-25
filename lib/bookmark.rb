@@ -1,4 +1,5 @@
 require_relative "database_connection"
+require_relative 'comment'
 require 'uri'
 
 class Bookmark
@@ -29,6 +30,13 @@ class Bookmark
     @title = title
     @url = url
     @id = id
+  end
+
+  def comments
+    comments = DatabaseConnection.query("SELECT * FROM comments WHERE bookmark_id=#{@id}")
+    comments.map do |comment|
+      Comment.new(comment['id'], comment['text'], comment['bookmark_id'])
+    end
   end
 
   private
