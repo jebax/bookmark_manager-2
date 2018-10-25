@@ -11,6 +11,12 @@ describe Bookmark do
       expect(result['url']).to eq 'http://www.makersacademy.com'
       expect(result['id']).to eq '1'
     end
+    it 'adds returns false for an invlid url' do
+      title, body = 'Makers', 'tp://www.makersacademy.com'
+      result = Bookmark.create(title, body)
+      expect(result).to be false
+    end
+
   end
 
   describe '::all' do

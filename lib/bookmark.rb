@@ -1,4 +1,5 @@
 require_relative "database_connection"
+require 'uri'
 
 class Bookmark
 
@@ -11,6 +12,7 @@ class Bookmark
   end
 
   def self.create(title, url)
+    return false unless validate_url(url)
     DatabaseConnection.query("INSERT INTO bookmarks(title,url)" \
       "VALUES ('#{title}','#{url}') RETURNING id, title, url;")
   end
@@ -34,4 +36,9 @@ class Bookmark
   def self.select_all
     DatabaseConnection.query('SELECT * FROM bookmarks')
   end
+
+  def self.validate_url(url)
+    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+  end
+
 end

@@ -12,15 +12,11 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/' do
-    if params[:url] =~ /\A#{URI::regexp(['http', 'https'])}\z/
-      Bookmark.create(params[:title], params[:url])
-      redirect '/bookmarks'
-    else
-      flash[:warning] = 'Please enter a valid URL!'
-      redirect '/'
-    end
+    redirect '/bookmarks' if Bookmark.create(params[:title], params[:url])
+    flash[:warning] = 'Please enter a valid URL!'
+    redirect '/'
   end
-  
+
   get '/bookmarks' do
     @bookmarks = Bookmark.all
     erb :bookmarks
